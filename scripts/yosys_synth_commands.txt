@@ -1,0 +1,20 @@
+read_verilog verilog_file
+
+hierarchy -check -top module_name
+
+synth -top module_name
+
+flatten
+
+dfflibmap -liberty $PDK_ROOT/sky130/share/pdk/sky130A/libs.ref/sky130_fd_sc_hd/lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+abc -liberty $PDK_ROOT/sky130/share/pdk/sky130A/libs.ref/sky130_fd_sc_hd/lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+
+clean
+opt
+
+write_verilog -noattr -norename $NETLIST_DIR/${TOP_MODULE}_synth.v
+
+stat
+stat -liberty $PDK_ROOT/sky130/share/pdk/sky130A/libs.ref/sky130_fd_sc_hd/lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+
+show

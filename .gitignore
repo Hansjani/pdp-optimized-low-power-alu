@@ -1,0 +1,65 @@
+# Local/editor files
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+.codex/
+.agents/
+
+# Environment and secrets
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+*.p12
+*.jks
+secrets/
+
+# Simulation outputs
+simv
+simv.daidir/
+csrc/
+*.vcd
+*.fst
+*.fsdb
+*.saif
+*.lxt
+*.lxt2
+*.vvp
+*.log
+
+# Keep only the GitHub-ready simulation entry point
+/scripts/sim/*
+!/scripts/sim/run_gate_sim.sh
+
+# Keep only the current unified testbench
+/tb/*
+!/tb/alu_tb.v
+
+# Keep only the currently supported optimized design
+/rtl/optimized/*
+!/rtl/optimized/alu_op_iso.v
+
+# Report step is planned but not implemented yet
+/scripts/pd/07_report.tcl
+
+# Generated EDA outputs
+/netlist/
+/reports/
+/results/
+/pd/
+
+# Tool caches and temporary files
+work/
+build/
+out/
+tmp/
+temp/
+*.rpt
+*.jou
+*.str
+*.history
