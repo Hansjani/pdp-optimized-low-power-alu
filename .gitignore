@@ -47,6 +47,10 @@ csrc/
 # Report step is planned but not implemented yet
 /scripts/pd/07_report.tcl
 
+# Command scratch/reference files are documented in docs/tool_commands.md
+/scripts/openroad_tcl_commands.txt
+/scripts/yosys_synth_commands.txt
+
 # Generated EDA outputs
 /netlist/
 /reports/
