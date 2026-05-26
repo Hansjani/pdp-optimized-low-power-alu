@@ -1,3 +1,6 @@
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2026 Hans Jani
+
 # Tool Commands Used in This Project
 
 This document summarizes the main Icarus Verilog, Yosys, and OpenROAD commands used by the project scripts.

@@ -1,5 +1,9 @@
 # Low-Power 32-bit ALU Design
 
+SPDX-License-Identifier: MIT
+
+Copyright (c) 2026 Hans Jani
+
 This project currently supports a baseline 32-bit ALU and an operand-isolation low-power variant. Additional optimized variants such as clock gating and multi-VT optimization are planned for future updates.
 
 ## Project Structure
@@ -82,6 +86,10 @@ The physical-design flow automatically runs `scripts/pd/07_report.tcl` after rou
 ## Tool Command Reference
 
 See `docs/tool_commands.md` for the Icarus Verilog, Yosys, and OpenROAD commands used by this project and what each command does.
+
+## License
+
+This project is licensed under the MIT License. See `LICENSE` for details.
 
 ## GitHub Upload Checklist
 
