@@ -3,7 +3,7 @@
 # ============================================================
 
 initialize_floorplan \
-    -utilization 50 \
+    -utilization 47 \
     -aspect_ratio 1 \
     -core_space 12 \
     -site unithd
