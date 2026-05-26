@@ -16,6 +16,11 @@ scripts/
   pd/           OpenROAD physical-design flow scripts
 constraints/    SDC timing constraints
 docs/           Project documentation
+netlist/        Generated synthesized and simulation netlists (ignored)
+reports/        Generated synthesis and physical-design reports (ignored)
+results/        Generated physical-design database/output files (ignored)
+waves/          Generated waveform files from simulation (ignored)
+simv            Generated simulation executable (ignored)
 ```
 
 Generated simulation, synthesis, report, waveform, and physical-design outputs are intentionally ignored by Git. Recreate them locally using the scripts instead of committing them.
@@ -71,6 +76,8 @@ openroad scripts/pd/00_physical_design.tcl
 ```
 
 Supported public flow targets are `baseline` and `operand_isolation`.
+
+The physical-design flow automatically runs `scripts/pd/07_report.tcl` after routing and writes post-route area, power, timing, and summary reports under `reports/`.
 
 ## Tool Command Reference
 

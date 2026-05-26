@@ -58,10 +58,13 @@ proc
 opt
 flatten
 write_verilog -noattr -norename $NETLIST_DIR/${TOP_MODULE}_sim.v
+techmap
+opt
 dfflibmap -liberty $SKY_LIB
 abc -liberty $SKY_LIB
 clean
 opt
+delete t:\$scopeinfo
 write_verilog -noattr -norename $NETLIST_DIR/${TOP_MODULE}_synth.v
 stat
 stat -liberty $SKY_LIB
@@ -79,9 +82,11 @@ Command descriptions:
 | `opt` | Performs generic logic cleanup and optimization. |
 | `flatten` | Flattens module hierarchy for a cleaner simulation netlist. |
 | `write_verilog -noattr -norename ..._sim.v` | Writes an intermediate clean Verilog netlist for simulation. |
+| `techmap` | Maps remaining generic RTL cells into lower-level technology-independent primitives before library mapping. |
 | `dfflibmap -liberty $SKY_LIB` | Maps flip-flops to cells from the SKY130 liberty file. |
 | `abc -liberty $SKY_LIB` | Performs technology mapping and logic optimization using the SKY130 standard-cell library. |
 | `clean` | Removes unused wires, cells, and temporary objects. |
+| `delete t:\$scopeinfo` | Removes Yosys scope-info debug/helper cells so OpenROAD does not see unsupported cells. |
 | `write_verilog -noattr -norename ..._synth.v` | Writes the synthesized Verilog netlist. |
 | `stat` | Prints generic design statistics. |
 | `stat -liberty $SKY_LIB` | Prints area statistics using the SKY130 liberty file. |
@@ -126,6 +131,7 @@ source "$script_dir/03_pdn.tcl"
 source "$script_dir/04_placement.tcl"
 source "$script_dir/05_cts.tcl"
 source "$script_dir/06_route.tcl"
+source "$script_dir/07_report.tcl"
 ```
 
 Setup commands:
@@ -179,5 +185,30 @@ Placement, CTS, and routing commands:
 | `global_route` | Performs coarse routing. |
 | `detailed_route` | Performs final detailed routing. |
 | `estimate_parasitics -global_routing` | Estimates parasitics from the routed design for timing/power analysis. |
+
+Report generation commands:
+
+| Command | Description |
+| --- | --- |
+| `file dirname [file normalize [info script]]` | Finds the report script location so report paths do not depend on the launch directory. |
+| `file join $project_root reports` | Builds the project report directory path. |
+| `file mkdir $reports_root/...` | Creates the report output directories for area, power, timing, and summary reports. |
+| `current_design` | Gets the linked design name so reports are named consistently. |
+| `clock format [clock seconds]` | Records a generation timestamp in each report header. |
+| `open`, `puts`, `close` | Creates formatted report files and writes headers, section titles, and observation notes. |
+| `tee -append -file ... { report_design_area }` | Appends post-route design area data to the area and summary reports. |
+| `tee -append -file ... { report_cell_usage }` | Appends standard-cell usage data to the area report. |
+| `tee -append -file ... { report_power }` | Appends power analysis data to the power and summary reports. |
+| `tee -append -file ... { report_checks -path_delay max ... }` | Appends max-delay timing paths to the timing report. |
+| `tee -append -file ... { report_checks -path_delay min ... }` | Appends min-delay timing paths to the timing report. |
+| `report_worst_slack`, `report_wns`, `report_tns` | Appends timing summary metrics to the timing and summary reports. |
+| `report_check_types` | Appends electrical and timing check status to the timing report. |
+
+Generated report files:
+
+- `reports/area/<design_name>_area.rpt`
+- `reports/power/<design_name>_power.rpt`
+- `reports/timing/<design_name>_timing.rpt`
+- `reports/summary/<design_name>_summary.rpt`
 
 Generated outputs are written under `results/` and `reports/`, which are ignored by Git.
